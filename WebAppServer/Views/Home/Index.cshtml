@@ -1,0 +1,82 @@
+﻿@using WebAppServer.Models;
+@model IEnumerable<Server>
+
+
+<h3>Информация о серверах</h3>
+<form>
+    <select name="serverId" style="margin-top : 10px">
+        <option selected disabled>Название сервера</option>
+        @foreach (var item in Server.serverList)
+        {
+            <option value="@item.Id"> @item.Name</option>
+        }
+    </select><br />
+
+    <select name="serverId" style="margin-top : 10px">
+        <option selected disabled>Срок эксплуатации сервера</option>
+        @foreach (var item in Server.serverList)
+        {
+            <option value="@item.Id"> @item.Validity </option>
+        }
+    </select><br />
+
+    <select name="serverModelId" style="margin-top : 10px">
+        <option selected disabled>Компания-производитель</option>
+        @foreach (var item in ServerModel.serverModelList)
+        {
+            <option value="@item.Id"> @item.NameCompany </option>
+        }
+    </select><br />
+
+    <select name="serverModelId" style="margin-top : 10px">
+        <option selected disabled>Год выпуска</option>
+        @foreach (var item in ServerModel.serverModelList)
+        {
+            <option value="@item.Id"> @item.MadeYear </option>
+        }
+    </select><br />
+
+    <select name="serverModelId" style="margin-top : 10px">
+        <option selected disabled>Скорость</option>
+        @foreach (var item in ServerModel.serverModelList)
+        {
+            <option value="@item.Id"> @item.Speed </option>
+        }
+    </select><br />
+
+    <select name="serverModelId" style="margin-top : 10px">
+        <option selected disabled>Тип</option>
+        @foreach (var item in ServerModel.serverModelList)
+        {
+            <option value="@item.Id"> @item.TypeServer </option>
+        }
+    </select><br />
+
+    <select name="osId" style="margin-top : 10px">
+        <option selected disabled>Операционная система</option>
+        @foreach (var item in OS.osListUniq)
+        {
+            <option value="@item.Id"> @item.Name </option>
+        }
+    </select><br />
+
+    <input type="submit" style="margin-top : 10px" Послать запрос/>
+</form>
+
+<br />
+
+<table border>
+    <th>Наименование сервера</th>
+    <th>Производитель</th>
+    <th>Год выпуска</th>
+    <th>Срок эксплуатации</th>
+    <th>Скорость</th>
+    <th>Тип</th>
+    <th>Операционная система</th>
+    @foreach (var item in Server.serverList)
+    {
+        var os = OS.osList.Single(os => os.Id == item.OsId);
+        var servMod = ServerModel.serverModelList.Single(servMod => servMod.Id == item.ServerModelId);
+        <tr> <td>@item.Name </td><td>@servMod.NameCompany</td><td>@servMod.MadeYear</td> <td>@item.Validity </td><td>@servMod.Speed</td><td>@servMod.TypeServer</td><td>@os.Name</td></tr>
+    }
+</table>
